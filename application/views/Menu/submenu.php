@@ -104,12 +104,12 @@
       <input type="text" class="form-control" id="title" name= "title" placeholder="Sub Menu Title">
     </div>
     <div class="form-group">
-    <select name="menu_id" id="menu_id" class="form-control"> 
-    <option value="">Select Menu</option>
-    <?php foreach($subMenu as $m) :?>
-    <option value="<?= $m['id']; ?>"><?= $m['menu']; ?></option>
-    <?php endforeach; ?>
-    </select>        
+      <select name="menu_id" id="menu_id" class="form-control"> 
+        <option value="">Select Menu</option>
+        <?php foreach($subMenu as $m) :?>
+          <option value="<?= $m['id']; ?>"><?= $m['menu']; ?></option>
+        <?php endforeach; ?>
+      </select>        
     </div>
     <div class="form-group">
     <input type="text" class="form-control" id="url" name= "url" placeholder="Sub Menu Url">   

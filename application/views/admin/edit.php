@@ -13,42 +13,40 @@
                   <?= form_error('name','<small class="text-danger pl-3">','</small>'); ?>
                 </div>
               </div>
-    <!-- Form Group (username)-->
-    <div class="row mb-3">
-    <label for="alamat" class="col-sm-2 col-form-label">Address</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="alamat" name="alamat" value="<?= $user['alamat']; ?>" >
-       <?= form_error('alamat','<small class="text-danger pl-3">','</small>'); ?>
-    </div>
-    </div>
-    <div class="row mb-3">
-     <label for="no_telepon" class="col-sm-2 col-form-label">Phone Number</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="no_telepon" name="no_telepon" value="<?= $user['no_telepon']; ?>" >
-      <?= form_error('no_telepon','<small class="text-danger pl-3">','</small>'); ?>
-    </div>
-    </div>
-     <div class="row mb-3">
-     <label for="email" class="col-sm-2 col-form-label">Email</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="email" name="email" value="<?= $user['email']; ?>" readonly>
-    </div>
-    </div>
-    
-      <div class="form-group row">
-    <div class="col-sm-2">Picture</div>
-    <div class="col-sm-10">
-        <div class="row">
-         <div class="col-sm-3">
-         <?php if($user['gambar'] !=null) { ?>
-         <img src="<?= base_url('assets/img/profile/'.$user['gambar'])?>" class="img-thumbnail">
-    </div>
-        <?php } ?>
-    <div class="col-sm-9">
-        <div class="custom-file">
-    <input type="file" class="custom-file-input" id="gambar" name="gambar">
-    <label class="custom-file-label" for="gambar">Choose file</label>
-  </div>
+              <div class="row mb-3">
+                <label for="alamat" class="col-sm-2 col-form-label">Address</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="alamat" name="alamat" value="<?= $user['alamat']; ?>" >
+                  <?= form_error('alamat','<small class="text-danger pl-3">','</small>'); ?>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="no_telepon" class="col-sm-2 col-form-label">Phone Number</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="no_telepon" name="no_telepon" value="<?= $user['no_telepon']; ?>" >
+                  <?= form_error('no_telepon','<small class="text-danger pl-3">','</small>'); ?>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="email" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="email" name="email" value="<?= $user['email']; ?>" readonly>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-2">Picture</div>
+                <div class="col-sm-10">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <?php if($user['gambar'] !=null) { ?>
+                      <img src="<?= base_url('assets/img/profile/'.$user['gambar'])?>" class="img-thumbnail">
+                  </div>
+                  <?php } ?>
+                    <div class="col-sm-9">
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="gambar" name="gambar">
+                        <label class="custom-file-label" for="gambar">Choose file</label>
+                      </div>
     </div>
     </div>
     </div>
