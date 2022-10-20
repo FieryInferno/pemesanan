@@ -6,7 +6,6 @@ class Spk extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('spk_model');
 		$this->load->database();
 	}
 
