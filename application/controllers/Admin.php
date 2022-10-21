@@ -108,7 +108,7 @@ class Admin extends CI_Controller
       $this->db->where('email', $email);
       $this->db->update('user');
       $this->session->set_flashdata('message','<div class="alert alert-success" role="alert"> Your Profile has been updated!</div>');
-      redirect();
+      // redirect();
     }
   }
 
