@@ -8,6 +8,11 @@ class Pembayaran_model extends CI_Model
   {
     $this->db->select('*');
     $this->db->from('order_detail');
+
+    if ($this->session->role_id === '2') {
+      $this->db->where('pemesanan_detail.user_id', $this->session->id);
+    }
+
     $this->db->join('pemesanan_detail', 'pemesanan_detail.id_detail = order_detail.id_detail');
     $this->db->join('tarif_iklan', 'order_detail.jasa_siaran = tarif_iklan.id_tarif');
     // $this->db->join('pembayaran', 'order_detail.id_detail = pembayaran.id');

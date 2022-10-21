@@ -9,7 +9,7 @@ class SuratPerjanjianModel extends CI_Model
     $this->db->select('surat_perjanjian.*, user.name');
     $this->db->join('user', 'surat_perjanjian.user_id = user.id');
 
-    if ($this->session->role_id === 2) {
+    if ($this->session->role_id === '2') {
       $this->db->where('surat_perjanjian.user_id', $this->session->id);
     }
 

@@ -32,25 +32,33 @@
                   <td align = "center">Tanggal Awal Pembayaran</td>
                   <td align = "center">Tanggal Akhir Penyiaran</td>
                   <td align = "center">Waktu Siaran</td>
-                  <td align = "center">Action</td>
+                  <?php
+                    if ($this->session->role_id === 1) { ?>
+                      <td align = "center">Action</td>
+                    <?php }
+                  ?>
                 </center>
               </tr>
             </thead>
             <tbody>
               <?php
                 $no = 1;
-                foreach($pesanan as $sm): ?>
+                foreach($bayar as $sm): ?>
                   <tr>
                     <td align = "center"><?= $no++ ?></td>
                     <td align = "center"><?= $sm->nama_instansi ?></td>
                     <td align = "center"><?= $sm->detail_tarif_subtotal ?></td>
                     <td align = "center"><?= $sm->tgl_penyiaran ?></td>
                     <td align = "center"><?= $sm->tgl_akhirpenyiaran ?></td>  
-                    <td align = "center"><?= $sm->waktu_siaran ?></td>   
-                    <td>
-                      <a href="" class="badge badge-primary" data-bs-toggle="modal" data-bs-target="#editInformasi<?= $sm->id_detail ?>"><i class="fas fa-pen">&nbsp;Edit</i></a>
-                      <a href="<?= base_url(); ?>pembayaran/delete/<?= $sm->id_detail ?>" class="badge badge-danger " onclick="return confirm('yakin');" ><i class="fas fa-trash">&nbsp;Delete</i></a>
-                    </td>
+                    <td align = "center"><?= $sm->waktu_siaran ?></td>
+                    <?php
+                      if ($this->session->role_id === 1) { ?>
+                        <td>
+                          <a href="" class="badge badge-primary" data-bs-toggle="modal" data-bs-target="#editInformasi<?= $sm->id_detail ?>"><i class="fas fa-pen">&nbsp;Edit</i></a>
+                          <a href="<?= base_url(); ?>pembayaran/delete/<?= $sm->id_detail ?>" class="badge badge-danger " onclick="return confirm('yakin');" ><i class="fas fa-trash">&nbsp;Delete</i></a>
+                        </td>
+                      <?php }
+                    ?>
                   </tr>
                 <?php endforeach;
               ?>
@@ -63,7 +71,7 @@
 </div>
 
 <?php
-  foreach ($pesanan as $sm) { ?>
+  foreach ($bayar as $sm) { ?>
     <div class="modal fade" id="editInformasi<?= $sm->id_detail; ?>" tabindex="-1" aria-labelledby="editInformasi<?= $sm->id_detail; ?>" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
