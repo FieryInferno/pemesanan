@@ -4,6 +4,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Pembayaran_model extends CI_Model
 {
+  public function get_pembayaran()
+  {
+    $this->db->select('*');
+    $this->db->from('order_detail');
+    $this->db->join('pemesanan_detail', 'pemesanan_detail.id_detail = order_detail.id_detail');
+    $this->db->join('tarif_iklan', 'order_detail.jasa_siaran = tarif_iklan.id_tarif');
+    // $this->db->join('pembayaran', 'order_detail.id_detail = pembayaran.id');
+    return $this->db->get('');
+  }
 
 public function getInfoSiaran(){
 	$query = "SELECT `order_detail`.*,`tarif_iklan`.`jasa_siaran`
@@ -47,14 +56,5 @@ $data = [
 ];
  $this->db->where('id_detail',  $this->input->post('id_detail'));
  $this->db->update('pemesanan_detail', $data);
-}
-public function get_pembayaran()
-{
-$this->db->select('*');
-$this->db->from('order_detail');
-$this->db->join('pemesanan_detail', 'pemesanan_detail.id_detail = order_detail.id_detail');
-$this->db->join('tarif_iklan', 'order_detail.jasa_siaran = tarif_iklan.id_tarif');
-$this->db->join('pembayaran', 'order_detail.id_detail = pembayaran.id');
-return $this->db->get('');
 }
 }
