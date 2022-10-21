@@ -4,6 +4,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Penyiaran_model extends CI_Model
 {
+  public function get_pesan()
+  {
+    $this->db->select('*');
+    $this->db->from('order_detail');
+    $this->db->join('pemesanan_detail', 'pemesanan_detail.id_detail = order_detail.id_detail');
+    $this->db->join('tarif_iklan', 'order_detail.jasa_siaran = tarif_iklan.id_tarif');
+
+    if ($this->session->role_id === '2') {
+      $this->db->where('pemesanan_detail.user_id', $this->session->id);
+    }
+
+    return $this->db->get('');
+  }
 
 public function getInfoSiaran(){
 	$query = "SELECT `order_detail`.*,`tarif_iklan`.`jasa_siaran`
@@ -12,14 +25,6 @@ public function getInfoSiaran(){
 
 			 ";
 	return $this->db->query($query)->result_array();
-}
-public function get_pesan()
-{
-$this->db->select('*');
-$this->db->from('order_detail');
-$this->db->join('pemesanan_detail', 'pemesanan_detail.id_detail = order_detail.id_detail');
-$this->db->join('tarif_iklan', 'order_detail.jasa_siaran = tarif_iklan.id_tarif');
-return $this->db->get('');
 }
 
 public function delete($id_detail)

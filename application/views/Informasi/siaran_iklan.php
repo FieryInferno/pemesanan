@@ -35,7 +35,11 @@
                   <td align = "center">Waktu Siaran</td>
                   <td align = "center">Total Siaran</td>
                   <td align = "center">Programa</td>
-                  <td align = "center">Action</td>
+                  <?php
+                    if ($this->session->role_id === 1) { ?>
+                      <td align = "center">Action</td>
+                    <?php }
+                  ?>
                 </center>
               </tr>
             </thead>
@@ -52,11 +56,15 @@
                     <td align = "center"><?php echo $sm->tgl_akhirpenyiaran ?></td>  
                     <td align = "center"><?php echo $sm->waktu_siaran ?></td>   
                     <td align = "center"><?php echo $sm->qty ?></td>  
-                    <td align = "center"><?php echo $sm->programa ?></td>   
-                    <td>
-                      <a href="" class="badge badge-primary" data-bs-toggle="modal" data-bs-target="#editInformasi<?php echo $sm->id_detail ?>"><i class="fas fa-pen">&nbsp;Edit</i></a>                                 
-                      <a href="<?= base_url(); ?>penyiaran/delete/<?php echo $sm->id_detail ?>" class="badge badge-danger " onclick="return confirm('yakin');" ><i class="fas fa-trash">&nbsp;Delete</i></a>
-                    </td>
+                    <td align = "center"><?php echo $sm->programa ?></td>  
+                    <?php
+                      if ($this->session->role_id === 1) { ?> 
+                        <td>
+                          <a href="" class="badge badge-primary" data-bs-toggle="modal" data-bs-target="#editInformasi<?php echo $sm->id_detail ?>"><i class="fas fa-pen">&nbsp;Edit</i></a>                                 
+                          <a href="<?= base_url(); ?>penyiaran/delete/<?php echo $sm->id_detail ?>" class="badge badge-danger " onclick="return confirm('yakin');" ><i class="fas fa-trash">&nbsp;Delete</i></a>
+                        </td>
+                      <?php }
+                    ?>
                   </tr>
                 <?php endforeach;
               ?>
