@@ -40,7 +40,7 @@
                 <tr>
                   <td align = "center"><?= $no++ ?></td>
                   <td ><?= $sm['name']; ?></td>
-                  <td ><a href="<?= base_url('upload/' . $sm['surat_perjanjian']); ?>" download><i class="fas fa-fw fa-solid fa-file"></i></a></td>
+                  <td ><a href="<?= base_url('upload/' . $sm['surat_perjanjian']); ?>" download>Download <i class="fas fa-fw fa-solid fa-file"></i></a></td>
                   <td>                                           
                     <a href="" class="badge badge-primary" data-bs-toggle="modal" data-bs-target="#editSuratPerjanjian<?= $sm['id'];?>">Edit</a>
                     <a href="<?= base_url('spk/delete/' . $sm['id']); ?>" class="badge badge-danger " onclick="return confirm('yakin');" >Delete</a>

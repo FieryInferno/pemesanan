@@ -45,7 +45,7 @@
                   <td align = "center"><?= $sm->email ?></td>
                   <td align = "center"><?= $sm->catatan  ?></td>
                   <td align = "center"><?= $sm->waktu_order  ?></td>  
-                  <td align = "center"> <a href="<?= base_url('upload/' . $sm->isi_iklan); ?>" download><i class="fas fa-fw fa-solid fa-file"></i></a></td>                                          
+                  <td align = "center"> <a href="<?= base_url('upload/' . $sm->isi_iklan); ?>" download>Download <i class="fas fa-fw fa-solid fa-file"></i></a></td>                                          
                 </tr>
               <?php endforeach; ?>
             </tbody>

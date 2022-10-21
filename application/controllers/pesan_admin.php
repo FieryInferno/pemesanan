@@ -19,7 +19,6 @@ class Pesan_admin extends CI_Controller
 
     $data['menu'] = $this->db->get('order_detail')->result_array();
     $data['pesanan'] = $this->Memesan_model->get_pesan()->result();
-    //$data['files'] = directory_map('./upload');
     $data['subMenu'] = $this->Memesan_model->getJenisSiaran();
     $data['jenis1'] = $this->db->get('jenis_siaran')->result_array();
   
