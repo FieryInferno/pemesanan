@@ -18,7 +18,11 @@
       <?= $this->session->flashdata('message'); ?>
       <?= $this->session->flashdata('pesan'); ?>
       <?= $this->session->flashdata('notif');?>
-      <a href="" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#tambahSuratPerjanjian">Tambah</a>
+      <?php
+        if ($this->session->role_id === 1) { ?>
+          <a href="" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#tambahSuratPerjanjian">Tambah</a>
+        <?php }
+      ?>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -29,7 +33,11 @@
                 <td align="center">No.</td>
                 <td align="center">Nama</td>
                 <td align="center">Surat Perjanjian</td>
-                <td align="center">Action</td>
+                <?php
+                  if ($this->session->role_id === 1) { ?>
+                    <td align="center">Action</td>
+                  <?php }
+                ?>
               </center>                                            
             </tr>
           </thead>
@@ -41,10 +49,14 @@
                   <td align = "center"><?= $no++ ?></td>
                   <td ><?= $sm['name']; ?></td>
                   <td ><a href="<?= base_url('upload/' . $sm['surat_perjanjian']); ?>" download>Download <i class="fas fa-fw fa-solid fa-file"></i></a></td>
-                  <td>                                           
-                    <a href="" class="badge badge-primary" data-bs-toggle="modal" data-bs-target="#editSuratPerjanjian<?= $sm['id'];?>">Edit</a>
-                    <a href="<?= base_url('spk/delete/' . $sm['id']); ?>" class="badge badge-danger " onclick="return confirm('yakin');" >Delete</a>
-                  </td>
+                  <?php
+                    if ($this->session->role_id === 1) { ?>
+                      <td>
+                        <a href="" class="badge badge-primary" data-bs-toggle="modal" data-bs-target="#editSuratPerjanjian<?= $sm['id'];?>">Edit</a>
+                        <a href="<?= base_url('spk/delete/' . $sm['id']); ?>" class="badge badge-danger " onclick="return confirm('yakin');" >Delete</a>
+                      </td>
+                    <?php }
+                  ?>
                 </tr>
               <?php endforeach;
             ?>
