@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 20, 2022 at 04:57 PM
+-- Generation Time: Oct 21, 2022 at 01:35 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -77,6 +77,7 @@ INSERT INTO `order_detail` (`id`, `id_detail`, `jasa_siaran`, `qty`, `detail_tar
 
 CREATE TABLE `pemesanan_detail` (
   `id_detail` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `nama_instansi` varchar(100) NOT NULL,
   `order_tanggal` date NOT NULL,
   `id_jenis` int(11) NOT NULL,
@@ -92,19 +93,18 @@ CREATE TABLE `pemesanan_detail` (
   `order_status` int(1) NOT NULL,
   `waktu_order` datetime NOT NULL,
   `waktu_siaran` varchar(50) NOT NULL,
-  `catatan` varchar(255) NOT NULL
+  `catatan` varchar(255) NOT NULL,
+  `bukti_pembayaran` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `pemesanan_detail`
 --
 
-INSERT INTO `pemesanan_detail` (`id_detail`, `nama_instansi`, `order_tanggal`, `id_jenis`, `jenis`, `tgl_penyiaran`, `tgl_akhirpenyiaran`, `programa`, `no_telepon`, `email`, `isi_iklan`, `keterangan_berkas`, `order_total`, `order_status`, `waktu_order`, `waktu_siaran`, `catatan`) VALUES
-(54, 'Pt.surya puja', '2022-10-10', 0, 'Spot', '', '', 'Programa1', '081343355602', 'cindyolivia@gmail.com', 'CETAK KARTU RENCANA STUDI skripsi 2.pdf', '-', '', 0, '2022-10-10 16:46:10', '', '1 hari 2 kali tayang'),
-(55, 'Makmur Selalu', '2022-10-10', 0, 'jingle', '', '', 'Programa 2', '081343355602', 'makmur@gmail.com ', 'Kelas Remaja Minggu Ke-19.pdf', '-', '', 0, '2022-10-10 16:47:39', '', '1 hari 2 kali tayang'),
-(56, 'Pt.Berkah Abadi', '2022-10-17', 0, 'Filler', '19 Oktober 2022', '30 Desember 2022', 'Programa 4', '081343355602', 'berkah@gmail.com', 'CETAK KARTU RENCANA STUDI skripsi 2.pdf', '-', '', 0, '2022-10-17 17:43:16', '05.00-18.00 Wit', '1 hari 1 kali tayang'),
-(57, 'Pt.Indo', '2022-10-17', 0, 'Advertorial', '19 Oktober 2022', '8 November 2022', 'Programa 2', '081343355602', 'olivia@gmail.com', 'Kelas Remaja Minggu Ke-19.pdf', '-', '', 0, '2022-10-17 17:48:05', '18.00-24.00 Wit', '1 hari 2 kali tayang'),
-(58, 'Cindy Rumpaidus', '2022-10-19', 0, 'Spot', '', '', 'Programa 4', '081343355602', 'olivia@gmail.com', 'Jean Welsa Rumpaidus pdf 2021 sk003.pdf', '-', '', 0, '2022-10-19 09:17:06', '', '1 hari 2 kali tayang');
+INSERT INTO `pemesanan_detail` (`id_detail`, `user_id`, `nama_instansi`, `order_tanggal`, `id_jenis`, `jenis`, `tgl_penyiaran`, `tgl_akhirpenyiaran`, `programa`, `no_telepon`, `email`, `isi_iklan`, `keterangan_berkas`, `order_total`, `order_status`, `waktu_order`, `waktu_siaran`, `catatan`, `bukti_pembayaran`) VALUES
+(54, 14, 'Pt.surya puja', '2022-10-10', 0, 'Spot', '2022-10-15', '2022-10-26', 'Programa1', '081343355602', 'cindyolivia@gmail.com', 'Berdaya Assessment.pdf', '-', '', 0, '2022-10-10 16:46:10', '11:00', '1 hari 2 kali tayang', NULL),
+(55, 10, 'Makmur Selalu', '2022-10-10', 0, 'jingle', '2022-10-21', '2022-10-24', 'Programa 2', '081343355602', 'makmur@gmail.com ', 'Berdaya Assessment.pdf', '-', '', 0, '2022-10-10 16:47:39', '21:00', '1 hari 2 kali tayang', NULL),
+(58, 7, 'Cindy Rumpaidus', '2022-10-19', 0, 'Spot', '2022-10-11', '2022-10-12', 'Programa 4', '081343355602', 'olivia@gmail.com', 'Berdaya Assessment.pdf', '-', '', 0, '2022-10-19 09:17:06', '12:00', '1 hari 2 kali tayang', 'Capture.PNG');
 
 -- --------------------------------------------------------
 
@@ -156,6 +156,13 @@ CREATE TABLE `surat_perjanjian` (
   `surat_perjanjian` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `surat_perjanjian`
+--
+
+INSERT INTO `surat_perjanjian` (`id`, `user_id`, `surat_perjanjian`) VALUES
+(2, 7, 'screencapture-interview-ruangguru-test-50-f8edbbfe-1ec6-45f8-ab9d-71e51d1e6ae3-started-2022-07-08-17_45_01.pdf');
+
 -- --------------------------------------------------------
 
 --
@@ -203,8 +210,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `gambar`, `password`, `role_id`, `is_active`, `date_created`, `alamat`, `no_telepon`) VALUES
-(6, 'Cindy Olivia Rumpaidus', 'olivia@gmail.com', 'default.jpg', '$2y$10$W1ZgMKA/WuRSAwzFXyOwVOpBpuN7/DpOoNvYeUGttOjvCXzpfDhzK', 1, 1, 1648565834, 'Jl. Tasangkapura No.25, Entrop, Jayapura Selatan', '08134331113'),
-(7, 'Gabriella Graziella Rumpaidus', 'Bella@gmail.com', 'default.jpg', '$2y$10$W1ZgMKA/WuRSAwzFXyOwVOpBpuN7/DpOoNvYeUGttOjvCXzpfDhzK', 2, 1, 1654694099, 'Jln.siri', '(0967) 537488'),
+(6, 'Cindy Olivia Rumpaidus', 'olivia@gmail.com', 'pro1666348194.PNG', '$2y$10$W1ZgMKA/WuRSAwzFXyOwVOpBpuN7/DpOoNvYeUGttOjvCXzpfDhzK', 1, 1, 1648565834, 'Jl. Tasangkapura No.25, Entrop, Jayapura Selatan', '08134331113'),
+(7, 'Gabriella Graziella Rumpaidus', 'Bella@gmail.com', 'Capture1.PNG', '$2y$10$W1ZgMKA/WuRSAwzFXyOwVOpBpuN7/DpOoNvYeUGttOjvCXzpfDhzK', 2, 1, 1654694099, 'Jln.siri', '(0967) 537488'),
 (10, 'Siti Caludia', 'cindyolivia@gmail.com', 'default.jpg', '$2y$10$PpoW6lZxZW6lIfgdzpSyyOdvD7I0xFAbGEy6nhNBfDfN.1zrMhcSC', 2, 1, 1661364375, 'Jln.semangka', '081243356891'),
 (14, 'Pt. Makmur', 'makmur@gmail.com', 'default.jpg', '$2y$10$olzDIfmE64o.F5eWy/03gO8TaoKZ3HUA4FPMAVn3GfQi3Xy9jq.ki', 2, 1, 1665324562, '', '');
 
@@ -312,8 +319,8 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `is_active
 (35, 6, 'Saran & Masukan', 'saran', '\r\nfas fa-fw fa-solid fa-file-invoice\r\n\r\n', 1),
 (36, 4, 'Data Pemesanan', 'pesan_admin', 'fas fa- fw bi bi-cart', 1),
 (38, 2, 'Informasi Pembayaran', 'pembayaran_iklan', 'fas fa-fw fa-solid fa-info', 1),
-(39, 2, 'Informasi Penyiaran', 'info_penyiaran', 'fas fa-fw fa-solid fa-info', 1),
-(40, 2, 'Surat Perjanjian', 'surat', 'fas fa-fw fa-solid fa-envelope', 1),
+(39, 2, 'Informasi Penyiaran', 'penyiaran', 'fas fa-fw fa-solid fa-info', 1),
+(40, 2, 'Surat Perjanjian', 'spk', 'fas fa-fw fa-solid fa-envelope', 1),
 (41, 2, 'Saran & Masukan', 'saran_masukan', 'fas fa-fw fa-solid fa-file-invoice', 1),
 (44, 2, 'Memesan Iklan', 'pesan', 'fas fa- fw bi bi-cart', 1),
 (45, 2, 'Riwayat Pemesanan', 'Riwayat', 'bi bi-clock-history', 1),
@@ -436,7 +443,7 @@ ALTER TABLE `saran_masukan`
 -- AUTO_INCREMENT for table `surat_perjanjian`
 --
 ALTER TABLE `surat_perjanjian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tarif_iklan`
