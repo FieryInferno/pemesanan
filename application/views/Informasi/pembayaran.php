@@ -33,7 +33,7 @@
                   <td align = "center">Tanggal Akhir Penyiaran</td>
                   <td align = "center">Waktu Siaran</td>
                   <?php
-                    if ($this->session->role_id === 1) { ?>
+                    if ($this->session->role_id === '1') { ?>
                       <td align = "center">Action</td>
                     <?php }
                   ?>
@@ -52,7 +52,7 @@
                     <td align = "center"><?= $sm->tgl_akhirpenyiaran ?></td>  
                     <td align = "center"><?= $sm->waktu_siaran ?></td>
                     <?php
-                      if ($this->session->role_id === 1) { ?>
+                      if ($this->session->role_id === '1') { ?>
                         <td>
                           <a href="" class="badge badge-primary" data-bs-toggle="modal" data-bs-target="#editInformasi<?= $sm->id_detail ?>"><i class="fas fa-pen">&nbsp;Edit</i></a>
                           <a href="<?= base_url(); ?>pembayaran/delete/<?= $sm->id_detail ?>" class="badge badge-danger " onclick="return confirm('yakin');" ><i class="fas fa-trash">&nbsp;Delete</i></a>

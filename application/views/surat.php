@@ -19,7 +19,7 @@
       <?= $this->session->flashdata('pesan'); ?>
       <?= $this->session->flashdata('notif');?>
       <?php
-        if ($this->session->role_id === 1) { ?>
+        if ($this->session->role_id === '1') { ?>
           <a href="" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#tambahSuratPerjanjian">Tambah</a>
         <?php }
       ?>
@@ -34,7 +34,7 @@
                 <td align="center">Nama</td>
                 <td align="center">Surat Perjanjian</td>
                 <?php
-                  if ($this->session->role_id === 1) { ?>
+                  if ($this->session->role_id === '1') { ?>
                     <td align="center">Action</td>
                   <?php }
                 ?>
@@ -50,7 +50,7 @@
                   <td ><?= $sm['name']; ?></td>
                   <td ><a href="<?= base_url('upload/' . $sm['surat_perjanjian']); ?>" download>Download <i class="fas fa-fw fa-solid fa-file"></i></a></td>
                   <?php
-                    if ($this->session->role_id === 1) { ?>
+                    if ($this->session->role_id === '1') { ?>
                       <td>
                         <a href="" class="badge badge-primary" data-bs-toggle="modal" data-bs-target="#editSuratPerjanjian<?= $sm['id'];?>">Edit</a>
                         <a href="<?= base_url('spk/delete/' . $sm['id']); ?>" class="badge badge-danger " onclick="return confirm('yakin');" >Delete</a>
