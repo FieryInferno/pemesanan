@@ -21,4 +21,25 @@ class Riwayat extends CI_Controller
     $this->load->view('riwayat', $data);
     $this->load->view('admin/footer_order', $data);  
   }
+
+  public function upload($id)
+  {
+    $config['allowed_types'] = 'pdf|png|jpg|jpeg';
+    $config['upload_path'] = './upload/';
+
+    $this->load->library('upload', $config);
+    $this->upload->initialize($config);
+
+    if ($this->upload->do_upload('bukti_pembayaran')){
+      $data['bukti_pembayaran'] = $this->upload->data('file_name');
+    }else{
+      $this->session->set_flashdata('notif', '<div class="alert alert-success" role="alert"> ' . $this->upload->display_errors() . '</div>');
+      redirect('riwayat');
+    }
+
+    $this->db->update('pemesanan_detail', $data, ['id_detail' => $id]);
+
+    $this->session->set_flashdata('notif', '<div class="alert alert-success" role="alert">Berhasil upload bukti pembayaran!</div>');
+    redirect('riwayat');
+  }
 }
