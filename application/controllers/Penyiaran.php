@@ -8,53 +8,82 @@ class Penyiaran extends CI_Controller
 		parent::__construct();
 		$this->load->model('Penyiaran_model');
 		$this->load->database();
-		
-
 	}
+
 	public function index()
 	{
-$data['title'] = 'Informasi Penyiaran';
-$data['title1'] = 'Informasi Penyiaran Iklan';
+    $data['title'] = 'Informasi Penyiaran';
+    $data['title1'] = 'Informasi Penyiaran Iklan';
+    $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+    $data['detail'] = $this->db->get('pemesanan_detail')->result_array();
+    $data['menu'] = $this->db->get('order_detail')->result_array();
+    $data['pesanan'] = $this->Penyiaran_model->get_pesan()->result();
+    $data['info'] = $this->Penyiaran_model->getInfoSiaran();
+    $data['jenis1'] = $this->db->get('jenis_siaran')->result_array();   
 
-$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-$data['detail'] = $this->db->get('pemesanan_detail')->result_array();
-$data['menu'] = $this->db->get('order_detail')->result_array();
-$data['pesanan'] = $this->Penyiaran_model->get_pesan()->result();
+    $this->form_validation->set_rules('oder_status','Oder Status','required');
+    $this->form_validation->set_rules('tgl_penyiaran','Tanggal Penyiaran','required');
+    $this->form_validation->set_rules('tgl_akhirpenyiaran','Tanggal Akhir Penyiaran','required');
+    $this->form_validation->set_rules('nama_instansi','Nama Instansi','required');
+    $this->form_validation->set_rules('jasa_siaran','Jasa Siaran','required');
+    $this->form_validation->set_rules('jenis','Jenis Siaran','required');
+    $this->form_validation->set_rules('waktu_siaran','Waktu Siaran','required');
+    $this->form_validation->set_rules('qty','Total Siaran','required');
+    $this->form_validation->set_rules('programa','Programa','required');
 
-$data['info'] = $this->Penyiaran_model->getInfoSiaran();
-
-$data['jenis1'] = $this->db->get('jenis_siaran')->result_array();   
-
-$this->form_validation->set_rules('oder_status','Oder Status','required');
-$this->form_validation->set_rules('tgl_penyiaran','Tanggal Penyiaran','required');
-$this->form_validation->set_rules('tgl_akhirpenyiaran','Tanggal Akhir Penyiaran','required');
-$this->form_validation->set_rules('nama_instansi','Nama Instansi','required');
-$this->form_validation->set_rules('jasa_siaran','Jasa Siaran','required');
-$this->form_validation->set_rules('jenis','Jenis Siaran','required');
-$this->form_validation->set_rules('waktu_siaran','Waktu Siaran','required');
-$this->form_validation->set_rules('qty','Total Siaran','required');
-$this->form_validation->set_rules('programa','Programa','required');
-if($this->form_validation->run() == false )
-{
-$this->load->view('admin/header', $data);
-$this->load->view('admin/sidebar', $data);
-$this->load->view('admin/topbar', $data);
-$this->load->view('Informasi/siaran_iklan', $data);
-$this->load->view('admin/footer');	
-}else{
-	$data = [
-	'oder_status' => $this->input->post('oder_status'),
-	'tgl_penyiaran' => $this->input->post('tgl_penyiaran'),
-	'tgl_akhirpenyiaran' => $this->input->post('tgl_akhirpenyiaran'),
-	'waktu_siaran' => $this->input->post('waktu_siaran')
-	];
-	 $this->db->insert('order_detail', $data);
-	 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
+    if($this->form_validation->run() == false ) {
+      $this->load->view('admin/header', $data);
+      $this->load->view('admin/sidebar', $data);
+      $this->load->view('admin/topbar', $data);
+      $this->load->view('Informasi/siaran_iklan', $data);
+      $this->load->view('admin/footer');
+    } else {
+      $data = [
+        'oder_status' => $this->input->post('oder_status'),
+        'tgl_penyiaran' => $this->input->post('tgl_penyiaran'),
+        'tgl_akhirpenyiaran' => $this->input->post('tgl_akhirpenyiaran'),
+        'waktu_siaran' => $this->input->post('waktu_siaran')
+      ];
+      $this->db->insert('order_detail', $data);
+      $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
           Status Pembayaran Berhasil di ubah!</div>');
             redirect('Pemesanan');
-}
+    }
+  }
 
-}
+  public function update($id)
+  {
+    $this->form_validation->set_rules('tgl_penyiaran','Tanggal Penyiaran','required');
+    $this->form_validation->set_rules('tgl_akhirpenyiaran','Tanggal Akhir Penyiaran','required');
+    $this->form_validation->set_rules('waktu_siaran','Waktu Siaran','required');
+
+    if ($this->form_validation->run() !== false) {
+      $data = [
+        'tgl_penyiaran' => $this->input->post('tgl_penyiaran'),
+        'tgl_akhirpenyiaran' => $this->input->post('tgl_akhirpenyiaran'),
+        'waktu_siaran' => $this->input->post('waktu_siaran'), 
+      ];
+
+      $this->db->update('pemesanan_detail', $data, ['id_detail' => $id]);
+      $this->session->set_flashdata('message', '
+        <div class="alert alert-success" role="alert">
+          Data pemesanan berhasil diubah!
+        </div>
+      ');
+      redirect('penyiaran');
+    } else {
+      redirect('penyiaran');
+    }
+    
+  }
+
+  public function delete($id)
+  {
+    $this->db->delete('pemesanan_detail', ['id_detail' => $id]);
+    $this->session->set_flashdata('pesan','<div class="alert alert-success" role="alert">Data Telah dihapus! </div>');
+    redirect('Penyiaran');
+  }
+
 public function edit($id_detail = true){
 
 $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
@@ -124,20 +153,4 @@ $this->session->set_flashdata('notif', '<div class="alert alert-success" role="a
             Informasi Berhasil di update!</div>');
             redirect('Penyiaran');
 }
-public function delete($id_detail = null){
-$data['title'] = 'Hapus Data Sub Menu Management';
-$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-$this->load->model('Penyiaran_model','menu');
-$this->load->view('admin/header', $data);
-$this->load->view('admin/sidebar', $data);
-$this->load->view('admin/topbar', $data);
-$this->load->view('Informasi/editinfo', $data);
-$this->load->view('admin/footer');
-
-	$this->Penyiaran_model->delete($id_penyiaran);
-	//$this->session->set_flashdata('flash','Didelete');
-	$this->session->set_flashdata('pesan','<div class="alert alert-success" role="alert">Data Telah dihapus! </div>');
-	redirect('Penyiaran');
-
-	}
 	}
