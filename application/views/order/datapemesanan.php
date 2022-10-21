@@ -24,7 +24,8 @@
                   <td align = "center">Email</td>
                   <td align = "center">Catatan</td>
                   <td align = "center">Waktu Order</td>
-                  <td align = "center">isi_iklan</td>
+                  <td align = "center">Isi Iklan</td>
+                  <td align = "center">Bukti Pembayaran</td>
                 </center>                                            
               </tr>
             </thead>
@@ -44,8 +45,17 @@
                   <td align = "center"><?= $sm->no_telepon ?></td>              
                   <td align = "center"><?= $sm->email ?></td>
                   <td align = "center"><?= $sm->catatan  ?></td>
-                  <td align = "center"><?= $sm->waktu_order  ?></td>  
-                  <td align = "center"><a href="<?= base_url('upload/' . $sm->isi_iklan); ?>" download>Download<i class="fas fa-fw fa-solid fa-file"></i></a></td>                                          
+                  <td align = "center"><?= $sm->waktu_order  ?></td>
+                  <td align = "center"><a href="<?= base_url('upload/' . $sm->isi_iklan); ?>" download>Download<i class="fas fa-fw fa-solid fa-file"></i></a></td>
+                  <td align = "center">
+                    <?php
+                      if ($sm->bukti_pembayaran) { ?>
+                        <a href="<?= base_url('upload/' . $sm->bukti_pembayaran); ?>" target="blank">Lihat<i class="fas fa-fw fa-solid fa-file"></i></a>
+                      <?php } else {
+                        echo 'Klien belum upload bukti pembayaran';
+                      }
+                    ?>
+                  </td>
                 </tr>
               <?php endforeach; ?>
             </tbody>
