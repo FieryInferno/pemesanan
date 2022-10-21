@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $cmd = isset($_GET["cmd"]) ? $_GET["cmd"] : null;
 

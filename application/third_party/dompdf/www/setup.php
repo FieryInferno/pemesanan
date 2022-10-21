@@ -5,7 +5,7 @@
 
 <h3>System Configuration</h3>
 
-<?php 
+<?php
 require_once("../dompdf_config.inc.php");
 
 $server_configs = array(
@@ -79,7 +79,7 @@ $server_configs = array(
 
 <h3>DOMPDF Configuration</h3>
 
-<?php 
+<?php
 $dompdf_constants = array();
 $defined_constants = get_defined_constants(true);
 
@@ -237,7 +237,7 @@ $constants = array(
 
 <h3>Installed fonts for the Cpdf Backend</h3>
 
-<?php 
+<?php
 $fonts = Font_Metrics::get_font_families();
 $extensions = array("ttf", "afm", "afm.php", "ufm", "ufm.php");
 ?>
@@ -261,12 +261,12 @@ $extensions = array("ttf", "afm", "afm.php", "ufm", "ufm.php");
   <?php foreach($fonts as $family => $variants) { ?>
     <tr>
       <td class="title" rowspan="<?php echo count($variants); ?>">
-        <?php 
+        <?php
           echo $family; 
           if ($family == DOMPDF_DEFAULT_FONT) echo ' <strong>(default)</strong>';
         ?>
       </td>
-      <?php 
+      <?php
       $i = 0;
       foreach($variants as $name => $path) {
         if ($i > 0) {

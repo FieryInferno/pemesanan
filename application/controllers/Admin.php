@@ -98,7 +98,6 @@ class Admin extends CI_Controller
           $this->db->set('gambar', $new_image);
         } else { 
           echo $this->upload->display_errors();
-          die();
         }
       }
 
