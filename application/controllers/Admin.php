@@ -66,6 +66,52 @@ class Admin extends CI_Controller
     $this->load->view('admin/footer');
   }
 
+  public function editprofile(){
+    $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+    $data['title'] = 'Edit Profile Saya';
+
+    $this->form_validation->set_rules('name','Name','required|trim');
+
+    if($this->form_validation->run() == false) {
+      $this->load->view('admin/header', $data);
+      $this->load->view('admin/sidebar', $data);
+      $this->load->view('admin/topbar', $data);
+      $this->load->view('admin/edit', $data);
+      $this->load->view('admin/footer');
+    } else {
+      $name = $this->input->post('name');
+      $alamat = $this->input->post('alamat');	
+      $no_telepon = $this->input->post('no_telepon');
+      $email = $this->input->post('email');
+      $upload_image = $_FILES['gambar']['name'];
+
+      if ($upload_image) {
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['upload_path'] = './assets/img/profile/';
+        $config['file_name'] = 'pro' . time();
+
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+
+        if ($this->upload->do_upload('gambar')){
+          $new_image = $this->upload->data('file_name');
+          $this->db->set('gambar', $new_image);
+        } else { 
+          echo $this->upload->display_errors();
+          die();
+        }
+      }
+
+      $this->db->set('name', $name);
+      $this->db->set('alamat', $alamat);
+      $this->db->set('no_telepon', $no_telepon);
+      $this->db->where('email', $email);
+      $this->db->update('user');
+      $this->session->set_flashdata('message','<div class="alert alert-success" role="alert"> Your Profile has been updated!</div>');
+      redirect('admin/profile');
+    }
+  }
+
 public function proses_edit_data($id  = true){
 $this->Role_model->proses_edit_data($id);
 $this->session->set_flashdata('notif', '<div class="alert alert-success" role="alert">
@@ -126,61 +172,6 @@ $this->load->view('admin/footer');
 
 
 }
-
-
-  public function editprofile(){
-    $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-    $data['title'] = 'Edit Profile Saya';
-
-    $this->form_validation->set_rules('name','Name','required|trim');
-    //$this->form_validation->set_rules('alamat','Address','required');
-    //$this->form_validation->set_rules('no_telepon ','Phone_Number','required');
-
-    if($this->form_validation->run() == false) {
-      $this->load->view('admin/header', $data);
-      $this->load->view('admin/sidebar', $data);
-      $this->load->view('admin/topbar', $data);
-      $this->load->view('admin/edit', $data);
-      $this->load->view('admin/footer');
-    } else {
-      $name = $this->input->post('name');
-      $alamat = $this->input->post('alamat');	
-      $no_telepon = $this->input->post('no_telepon');
-      $email = $this->input->post('email');
-      //cekjikaadagambaryangdiupload
-      $upload_image = $_FILES['image']['name'];
-
-      if ($upload_image) {
-        $config['allowed_types'] = 'gif|jpg|png';
-        $config['max_size']     = '2048';
-        $config['max_width']     = '1024';	
-        $config['max_height']     = '1000';		
-        $config['upload_path'] = './assets/img/profile/';
-        $config['file_name'] = 'pro' . time();
-
-        $this->load->library('upload', $config);
-
-        if ($this->upload->do_upload('gambar')){
-          //$old_image = $data['user']['image'];
-          //if($old_image != 'default.jpg') {
-          //	unlink(FCPATH . 'assets/img/profile/' . $old_image);
-          //}
-
-          $new_image = $this->upload->data('file_name');
-          $this->db->set('gambar', $new_image);
-        } else { 
-          echo $this->upload->display_errors();
-        }
-      }
-      $this->db->set('name', $name);
-      $this->db->set('alamat', $alamat);
-      $this->db->set('no_telepon', $no_telepon);
-      $this->db->where('email', $email);
-      $this->db->update('user');
-      $this->session->set_flashdata('message','<div class="alert alert-success" role="alert"> Your Profile has been updated!</div>');
-        redirect('admin/profile');
-    }
-  }
 }
 
 
